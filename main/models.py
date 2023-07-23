@@ -6,26 +6,27 @@ from django.contrib.auth.models import User
 
 class Item(models.Model):
     LABELS = (
-        ('BestSeller', 'BestSeller'),
-        ('New', 'New'),
-        ('Spicy🔥', 'Spicy🔥'),
+        ('Best Selling Foods', 'Best Selling Foods'),
+        ('New Food', 'New Food'),
+        ('Spicy Foods🔥', 'Spicy Foods🔥'),
     )   
 
     LABEL_COLOUR = (
         ('danger', 'danger'),
         ('success', 'success'),
         ('primary', 'primary'),
-        ('info', 'info')
+        ('info', 'info'),
+        ('warning', 'warning'),
     )
     title = models.CharField(max_length=150)
     description = models.CharField(max_length=250,blank=True)
     price = models.FloatField()
     pieces = models.IntegerField(default=6)
-    instructions = models.CharField(max_length=250,default="Jain Option Available")
+    instructions = models.CharField(max_length=250,default="Available")
     image = models.ImageField(default='default.png', upload_to='images/')
     labels = models.CharField(max_length=25, choices=LABELS, blank=True)
     label_colour = models.CharField(max_length=15, choices=LABEL_COLOUR, blank=True)
-    slug = models.SlugField(default="sushi_name")
+    slug = models.SlugField(default="foods")
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -89,7 +90,6 @@ class CartItems(models.Model):
         return reverse("main:remove-from-cart", kwargs={
             'pk' : self.pk
         })
-
     def update_status_url(self):
         return reverse("main:update_status", kwargs={
             'pk' : self.pk
