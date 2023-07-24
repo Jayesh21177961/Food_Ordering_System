@@ -119,6 +119,34 @@ USE_L10N = True
 USE_TZ = True
 
 
+#
+# Install django-storages app with pip
+# $ pip install django-storages
+#
+
+INSTALLED_APPS = (
+  ...
+  'storages',
+  ...
+)
+
+AWS_STORAGE_BUCKET_NAME = '*name*'
+AWS_S3_REGION_NAME = 'eu-central-1'  
+AWS_ACCESS_KEY_ID="****"
+AWS_SECRET_ACCESS_KEY="******"
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+MEDIAFILES_LOCATION = 'media'
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'config.utils.StaticStorage'
+DEFAULT_FILE_STORAGE = 'config.utils.MediaStorage'
+
+MEDIA_URL = '/%s/' MEDIAFILES_LOCATION
+STATIC_ROOT = '/%s/' STATICFILES_LOCATION
+STATIC_URL = 'http://%s/%s/' % (AWS_STORAGE_BUCKET_NAME, STATICFILES_LOCATION)
+STATICFILES_DIRS = (STATICFILES_LOCATION,)
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
